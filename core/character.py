@@ -14,7 +14,9 @@ class Character(pygame.sprite.Sprite):
 
     def __init__(self, image_path, area=None):
         super(Character, self).__init__()
-        self.source = pygame.image.load(image_path).convert_alpha()
+        # 初始化图片
+        # note 一定要convert(), 否则会有问题
+        self.source = pygame.image.load(image_path).convert()
         self.surface = pygame.Surface((self.x, self.y))
         self.dest = [0, 0]
         self.area = area or self.default_area
@@ -42,6 +44,7 @@ class Character(pygame.sprite.Sprite):
             self.move(self.down)
             self.rect.bottom += self.speed
 
+        self.surface.set_colorkey((255, 255, 255))
         self.surface.blit(self.source, self.dest, self.area)
 
         super(Character, self).update(*args, **kwargs)
